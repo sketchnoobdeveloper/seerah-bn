@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.Seerah" parent="android:Theme.Material.NoActionBar">
+        <item name="android:colorAccent">@color/seerah_accent</item>
+        <item name="android:windowBackground">@color/seerah_bg</item>
+        <item name="android:statusBarColor">@color/seerah_bg</item>
+        <item name="android:navigationBarColor">@color/seerah_bg</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">false</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="27">false</item>
+        <item name="android:textColorPrimary">@color/seerah_text</item>
+        <item name="android:textColorSecondary">@color/seerah_muted</item>
+    </style>
+</resources>

@@ -32,8 +32,14 @@ seerah-bn/
 │   └── chapters/
 │       ├── chapter_01.txt
 │       └── ... chapter_50.txt
-└── scripts/
-    └── pdf_to_json.py
+├── scripts/
+│   └── pdf_to_json.py
+└── android/
+    ├── README.md
+    └── app/src/main/
+        ├── AndroidManifest.xml
+        ├── java/com/snd/assaheed/seerah/
+        └── res/layout/
 ```
 
 ## Data format
@@ -165,6 +171,23 @@ The chapter boundary table is specific to this IslamHouse edition. The cached
 OCR text is included so the generated data can be reproduced exactly. A fresh
 Tesseract OCR may produce different wording and will use heading-based chapter
 detection instead of the verified offsets.
+
+## Android module
+
+`android/` is a standalone Java/XML reader that follows the Sketchware Pro
+constraints: no lambdas, no try-with-resources, anonymous inner classes,
+`Thread` + `Handler`, `HttpURLConnection` + `org.json`, `DownloadManager`, and
+`minSdk 21`. It includes:
+
+- chapter index with search and offline badge
+- lazy heading/paragraph reader with previous/next and font size
+- full-book keyword search
+- optional DownloadManager copy in internal storage
+- day/night layouts and Bangla typography
+
+See [`android/README.md`](android/README.md) for the class list, build command
+and drop-in integration steps. The module compiles independently; the current
+As-Sahih app is Kotlin/Compose, so it is not wired into that navigation graph.
 
 ## Source, licence and review limits
 

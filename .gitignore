@@ -3,3 +3,8 @@ __pycache__/
 .DS_Store
 .idea/
 *.iml
+android/local.properties
+android/.gradle/
+android/build/
+android/app/build/
+*.apk

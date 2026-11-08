@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">সীরাতুন নবী</string>
+    <string name="seerah_title">আর-রাহীকুল মাখতুম</string>
+    <string name="seerah_subtitle">রাসূলুল্লাহ ﷺ-এর জীবনী · ৫০ অধ্যায়</string>
+    <string name="seerah_search">খুঁজুন</string>
+    <string name="seerah_search_hint">সীরাতের ভেতরে শব্দ লিখুন</string>
+    <string name="seerah_search_title">সীরাতে খুঁজুন</string>
+    <string name="seerah_offline_download">অফলাইনে ডাউনলোড</string>
+    <string name="seerah_offline_delete">মুছুন</string>
+    <string name="seerah_retry">আবার চেষ্টা করুন</string>
+    <string name="seerah_previous">আগের অধ্যায়</string>
+    <string name="seerah_next">পরের অধ্যায়</string>
+    <string name="seerah_back">ফিরে যান</string>
+    <string name="seerah_font_minus">লেখা ছোট করুন</string>
+    <string name="seerah_font_plus">লেখা বড় করুন</string>
+</resources>
