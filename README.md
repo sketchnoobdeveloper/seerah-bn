@@ -1,0 +1,179 @@
+# seerah-bn — আর-রাহীকুল মাখতুম (বাংলা)
+
+Complete Bangla **Ar-Raheeq Al-Makhtum** (আর-রাহীকুল মাখতুম) in a clean,
+chapter-based JSON format for Android, web and offline readers.
+
+- **Book:** আর-রাহীকুল মাখতুম
+- **Author:** সফিউর রহমান মুবারকপুরী (Safiur Rahman Mubarakpuri)
+- **Translator:** খাদিজা আখতার রেজায়ী
+- **Language:** Bengali (`bn`)
+- **Chapters:** 50
+- **Source:** [IslamHouse Bangla PDF](https://d1.islamhouse.com/data/bn/ih_books/single/bn_ar_raheequl_makhtoom.pdf)
+- **Edition:** 508-page IslamHouse scan; text is OCR-derived and cleaned into
+  plain UTF-8 paragraphs. It is not a new translation or a scholarly review.
+
+## Repository layout
+
+```text
+seerah-bn/
+├── README.md
+├── LICENSE
+├── data/
+│   ├── seerah.json              # full book: meta + 50 chapters + content blocks
+│   ├── seerah_index.json        # meta + chapter titles only (fast loading)
+│   ├── manifest.json            # sizes and SHA-256 for every generated file
+│   ├── source/
+│   │   └── raheeq_ocr.txt       # cached OCR text used to build this edition
+│   └── chapters/
+│       ├── chapter_01.json
+│       └── ... chapter_50.json
+├── txt/
+│   ├── seerah_full.txt
+│   └── chapters/
+│       ├── chapter_01.txt
+│       └── ... chapter_50.txt
+└── scripts/
+    └── pdf_to_json.py
+```
+
+## Data format
+
+`data/seerah.json`:
+
+```json
+{
+  "meta": {
+    "title": "আর-রাহীকুল মাখতুম",
+    "title_en": "Ar-Raheeq Al-Makhtum",
+    "author": "সফিউর রহমান মুবারকপুরী",
+    "translator": "খাদিজা আখতার রেজায়ী",
+    "language": "bn",
+    "total_chapters": 50,
+    "source": "islamhouse.com"
+  },
+  "chapters": [
+    {
+      "id": 1,
+      "title": "আরবের ভৌগোলিক পরিচয় ও জাতিসমূহ",
+      "slug": "chapter-01",
+      "period": "প্রাক-ইসলামি আরব",
+      "summary": "আরব উপদ্বীপের অবস্থান, ভৌগোলিক বৈশিষ্ট্য ...",
+      "char_count": 38767,
+      "content": [
+        { "type": "heading", "text": "আরবের ভৌগোলিক পরিচয় ও জাতিসমূহ" },
+        { "type": "paragraph", "text": "সীরাতে নববী প্রকৃতপক্ষে ..." }
+      ]
+    }
+  ]
+}
+```
+
+Each `data/chapters/chapter_XX.json` is one chapter object (the same object as
+inside `chapters`). `data/seerah_index.json` contains only `meta` and the
+chapter list, so an app can show the table of contents without downloading the
+full 3.2 MB book.
+
+## Raw GitHub CDN URLs
+
+Replace `main` with a tag or commit SHA for immutable content.
+
+```text
+https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/data/seerah_index.json
+https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/data/seerah.json
+https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/data/chapters/chapter_01.json
+https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/data/chapters/chapter_50.json
+https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/txt/seerah_full.txt
+https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/txt/chapters/chapter_01.txt
+```
+
+GitHub also serves the same files through jsDelivr:
+
+```text
+https://cdn.jsdelivr.net/gh/sketchnoobdeveloper/seerah-bn@main/data/seerah_index.json
+https://cdn.jsdelivr.net/gh/sketchnoobdeveloper/seerah-bn@main/data/chapters/chapter_01.json
+```
+
+## Usage
+
+### Android (HttpURLConnection + org.json)
+
+```java
+final String indexUrl =
+    "https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/data/seerah_index.json";
+
+new Thread(new Runnable() {
+    @Override public void run() {
+        HttpURLConnection connection = null;
+        try {
+            connection = (HttpURLConnection) new URL(indexUrl).openConnection();
+            connection.setConnectTimeout(15000);
+            connection.setReadTimeout(30000);
+            connection.setRequestProperty("Accept", "application/json");
+            InputStream input = connection.getInputStream();
+            ByteArrayOutputStream output = new ByteArrayOutputStream();
+            byte[] buffer = new byte[8192];
+            int read;
+            while ((read = input.read(buffer)) != -1) {
+                output.write(buffer, 0, read);
+            }
+            input.close();
+            JSONObject index = new JSONObject(output.toString("UTF-8"));
+            JSONArray chapters = index.getJSONArray("chapters");
+            // post chapters to the UI thread with a Handler
+        } catch (Exception error) {
+            // show a friendly offline/error state
+        } finally {
+            if (connection != null) connection.disconnect();
+        }
+    }
+}).start();
+```
+
+The complete Java reference implementation is in the companion `android/`
+directory of this repository (see its README).
+
+### Web
+
+```js
+const index = await fetch(
+  "https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/data/seerah_index.json"
+).then((response) => response.json());
+
+const chapter = await fetch(
+  `https://raw.githubusercontent.com/sketchnoobdeveloper/seerah-bn/main/data/chapters/chapter_${String(index.chapters[0].id).padStart(2, "0")}.json`
+).then((response) => response.json());
+
+for (const block of chapter.content) {
+  console.log(block.type, block.text);
+}
+```
+
+## Build from the PDF
+
+The PDF is an image-only scan, so OCR is required. The script supports PyMuPDF
+or `pdftotext` when a text layer exists, a cached OCR file, and a Tesseract
+Bengali fallback.
+
+```bash
+python3 scripts/pdf_to_json.py \
+  --pdf /path/to/raheeq_bn.pdf \
+  --ocr-text data/source/raheeq_ocr.txt \
+  --out .
+```
+
+The chapter boundary table is specific to this IslamHouse edition. The cached
+OCR text is included so the generated data can be reproduced exactly. A fresh
+Tesseract OCR may produce different wording and will use heading-based chapter
+detection instead of the verified offsets.
+
+## Source, licence and review limits
+
+- **Source credit:** IslamHouse.com, *আর-রাহীকুল মাখতুম*.
+- **Content licence:** free for Islamic and educational use with source credit.
+  The underlying Bengali translation's redistribution permission has not been
+  independently confirmed; rights remain with the original publisher and
+  translator. This repository does not claim a new licence over the translation.
+- **Code licence:** MIT (see `LICENSE`).
+- **Review status:** OCR-derived technical cleanup only. Some recognition
+  artifacts remain, especially in chapter 3. The text has not been
+  scholar-reviewed and is not a substitute for a printed critical edition.

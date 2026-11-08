@@ -1,0 +1,423 @@
+{
+  "generated": "2026-11-08",
+  "pdf": "raheeq_bn.pdf",
+  "pdf_url": "https://d1.islamhouse.com/data/bn/ih_books/single/bn_ar_raheequl_makhtoom.pdf",
+  "ocr_text_supplied": true,
+  "total_chapters": 50,
+  "total_blocks": 4595,
+  "total_chars": 1158983,
+  "files": {
+    "data/chapters/chapter_01.json": {
+      "bytes": 108826,
+      "sha256": "2388a6edcc603e30af1c33a7c9014d0026068632cdca3c11f2717fa001ffb935"
+    },
+    "data/chapters/chapter_02.json": {
+      "bytes": 64638,
+      "sha256": "b23317c07f35cf982aafb1ad3e9008a8bdab349ef7270c6012056e3c062e6e26"
+    },
+    "data/chapters/chapter_03.json": {
+      "bytes": 34695,
+      "sha256": "066ae162c87b3e879daf6e85462beaa8194bb8f47fb9ee6593a90fb8f75755b7"
+    },
+    "data/chapters/chapter_04.json": {
+      "bytes": 18261,
+      "sha256": "a3173ab4e7a3d25a50b142a47453e5f6a432ba54b198a5f1575a8c572d3517a2"
+    },
+    "data/chapters/chapter_05.json": {
+      "bytes": 24026,
+      "sha256": "efb3b24982c5e997cc49a723262e483ae29134889077277e1b6abe2da60f3224"
+    },
+    "data/chapters/chapter_06.json": {
+      "bytes": 17453,
+      "sha256": "ff9dd3993b337d385fffa8e567245c18cb582710357948b63cd9a3b27f7cb62d"
+    },
+    "data/chapters/chapter_07.json": {
+      "bytes": 8301,
+      "sha256": "f0eeda28b7e731436e951451f924bf7884303f715914639bb4cfb8bb4f5f8bd8"
+    },
+    "data/chapters/chapter_08.json": {
+      "bytes": 13150,
+      "sha256": "56da4c454dbd5d581be6adc844af6205933e99da2b41582ce04373421f623af5"
+    },
+    "data/chapters/chapter_09.json": {
+      "bytes": 3529,
+      "sha256": "96c7a860357cab96cb361220c2b3a18cb402d716a6f095fb5e029ad9ceeeb4b6"
+    },
+    "data/chapters/chapter_10.json": {
+      "bytes": 6220,
+      "sha256": "0af3eb694c56ce55d613e4b4a3bdc2af87285eb5612d477632577e051a997def"
+    },
+    "data/chapters/chapter_11.json": {
+      "bytes": 9926,
+      "sha256": "55b7c31e5f58a8435e76fddb8f6f1f59b2df2bd255a3e28ccdd1f0e56d80875d"
+    },
+    "data/chapters/chapter_12.json": {
+      "bytes": 18287,
+      "sha256": "116e37f772890d544afa9d37a62c262e3c54ac40b4e78571bd24f5cbae6c5832"
+    },
+    "data/chapters/chapter_13.json": {
+      "bytes": 67943,
+      "sha256": "1029d383cfb656aa889f14fc6560ad9f2c11a0487c444274c8c3162e2038ec33"
+    },
+    "data/chapters/chapter_14.json": {
+      "bytes": 25264,
+      "sha256": "411b8523e27eebdeecce66497d1856adb68835fad990d639962d3776ca911406"
+    },
+    "data/chapters/chapter_15.json": {
+      "bytes": 29335,
+      "sha256": "7a9fee9b3521e820c852f1edc1d3b1835fd594a8bf8900a23a89833184c72dce"
+    },
+    "data/chapters/chapter_16.json": {
+      "bytes": 48791,
+      "sha256": "d8666cd3fe616c55d337ad5d50e61e4b6f440c117a03423d0e2b3597cebcb3ea"
+    },
+    "data/chapters/chapter_17.json": {
+      "bytes": 53835,
+      "sha256": "225bcb938debd03dad3678d5b45089022c70015ed81b980064581f89344250ca"
+    },
+    "data/chapters/chapter_18.json": {
+      "bytes": 68410,
+      "sha256": "a2dc29f7ac75166a09d650ab94d6c754af40865c833e6ac3f61ad0f69e60d261"
+    },
+    "data/chapters/chapter_19.json": {
+      "bytes": 41835,
+      "sha256": "dcc29c285c11c2206419d2f1912bd2c4b1acc606779b6847c91931576926710c"
+    },
+    "data/chapters/chapter_20.json": {
+      "bytes": 67826,
+      "sha256": "054d5fc789fc23320cccfb6f3c94d3d26471a35f0d50948561b7f496896a6f20"
+    },
+    "data/chapters/chapter_21.json": {
+      "bytes": 33739,
+      "sha256": "87161ed48870b3b2456429807ce0471c0c095697453d127ca4a80db3e462499c"
+    },
+    "data/chapters/chapter_22.json": {
+      "bytes": 36268,
+      "sha256": "dab36f3e1d49eecec4904cc256ed2fb040d8bd85345e2811cd1d4230f3e74d76"
+    },
+    "data/chapters/chapter_23.json": {
+      "bytes": 40823,
+      "sha256": "4781d1bf366d05863402fee93ca4569676d0b799ef5ed7c44689e9d97e2c3932"
+    },
+    "data/chapters/chapter_24.json": {
+      "bytes": 42944,
+      "sha256": "c702ba072f4fa610d7f8dc13c7512bdc52bf1b48b81843455fd91471d959e07e"
+    },
+    "data/chapters/chapter_25.json": {
+      "bytes": 35936,
+      "sha256": "6a757035041cad0083813eebcea70cb53f20481840b175ea811f9763c651d6d3"
+    },
+    "data/chapters/chapter_26.json": {
+      "bytes": 36341,
+      "sha256": "b2dca46ee1fce9b4389c0682613765652e30a5ee8da2075474dd2c299576e2bc"
+    },
+    "data/chapters/chapter_27.json": {
+      "bytes": 44028,
+      "sha256": "521ec412ec1fda4c8d6aea6f884b24f634257a6cfc65803c09bb2f94b2c9a38c"
+    },
+    "data/chapters/chapter_28.json": {
+      "bytes": 11012,
+      "sha256": "5cdd3b9deef09631f45a3bb02a50daad34bd8a9ded422111ed12f1e736a790ea"
+    },
+    "data/chapters/chapter_29.json": {
+      "bytes": 11959,
+      "sha256": "1183782e6c088ce400002ab65c4e9bbe0ba09171e2c2ea707ea30d0fcaf8ac2b"
+    },
+    "data/chapters/chapter_30.json": {
+      "bytes": 45845,
+      "sha256": "eec3b9b5146227a8f360f6fce8e3ec32871bde0e272e274aafcd0652e4504473"
+    },
+    "data/chapters/chapter_31.json": {
+      "bytes": 45871,
+      "sha256": "ccfd73cc77a95395dd952e9829175a5f528e6acbe72790f544d913e3c2f10ff4"
+    },
+    "data/chapters/chapter_32.json": {
+      "bytes": 48278,
+      "sha256": "edb785fe69bbc0bec3bb9bcd03bd48684b3050c8d7f413d57fb9ce366c82864b"
+    },
+    "data/chapters/chapter_33.json": {
+      "bytes": 119336,
+      "sha256": "944dc622db5bb8f110f50421d45e24b9abba33f27b359a80a2befdafeef76fad"
+    },
+    "data/chapters/chapter_34.json": {
+      "bytes": 111624,
+      "sha256": "b3b4758217b4edb73d562b21bbf96cae1986f4f4aabb617b4cd7f017219b25a7"
+    },
+    "data/chapters/chapter_35.json": {
+      "bytes": 107017,
+      "sha256": "b5774394cc84762f6f06a4d45a070ecd078e0be5e764ec8ab0d663439922b3e9"
+    },
+    "data/chapters/chapter_36.json": {
+      "bytes": 211202,
+      "sha256": "9c84cda993284086fd72ddd2339a65a5019334c932b090ab2bde3532d520f541"
+    },
+    "data/chapters/chapter_37.json": {
+      "bytes": 177812,
+      "sha256": "f42e21c97f633dfa4a8a87b0fa74e21de1079748d1c06490c6a3a70079db4793"
+    },
+    "data/chapters/chapter_38.json": {
+      "bytes": 128087,
+      "sha256": "3d23bf8c0a9cd986796a7b4879b8b2f49044a15ddb3590c0f946ba4643d127f5"
+    },
+    "data/chapters/chapter_39.json": {
+      "bytes": 133457,
+      "sha256": "2f04fea1df422ca1b6cb126673afe3d9ac01c3b2ad27d81e2d7d8303e231462c"
+    },
+    "data/chapters/chapter_40.json": {
+      "bytes": 102083,
+      "sha256": "5a81107e83fabeb5af6756b400bed57476dc55432dc2a6f89ff87d53c305a6e1"
+    },
+    "data/chapters/chapter_41.json": {
+      "bytes": 193174,
+      "sha256": "442e77822ca487482b4aaa7704d74212274899426e0c9a57590c0cc0c3459d8c"
+    },
+    "data/chapters/chapter_42.json": {
+      "bytes": 196350,
+      "sha256": "fb58916c5303db3c3504d5353c6b168e0ff8ee4fc45c642954983b51060af75a"
+    },
+    "data/chapters/chapter_43.json": {
+      "bytes": 65339,
+      "sha256": "c5be1e0951750446821c9cadc4322f57a9d87696de6f95360b6d3c0cc3289c69"
+    },
+    "data/chapters/chapter_44.json": {
+      "bytes": 65348,
+      "sha256": "b8bb48c5f0b855f65b0034f11d8dd7b51f6410efd8b1b4584459461fed1cb001"
+    },
+    "data/chapters/chapter_45.json": {
+      "bytes": 110361,
+      "sha256": "99df1a1a3612e250ed731cc6282ee77a25aaf38f730087d323dc9bfe5c450d32"
+    },
+    "data/chapters/chapter_46.json": {
+      "bytes": 179900,
+      "sha256": "c711ec4c4d9f4a4667f6077901c92b7d192023fb22604b05b926e69751d5ac0e"
+    },
+    "data/chapters/chapter_47.json": {
+      "bytes": 33483,
+      "sha256": "99a720333249b1dbf2a87dcbcf5fcfa58b835d8ce12c60f82fb73e159638aee3"
+    },
+    "data/chapters/chapter_48.json": {
+      "bytes": 21706,
+      "sha256": "d521838132ef2a0455bb873d7db23eb9254124d222320e7aafe2be9caf19ce13"
+    },
+    "data/chapters/chapter_49.json": {
+      "bytes": 56930,
+      "sha256": "dfe79883b5335be86bdba002df8671d2f5550e58bcdf146ce361c64c098667ec"
+    },
+    "data/chapters/chapter_50.json": {
+      "bytes": 58838,
+      "sha256": "1f5b9b22fa823589dda1997d4b26c8738954443619c1070e00af2139c031c5a8"
+    },
+    "data/seerah.json": {
+      "bytes": 3236331,
+      "sha256": "ec6c79b6fb1c50bcbc76e76759206747c49a9d65377568b57859a542484b4c02"
+    },
+    "data/seerah_index.json": {
+      "bytes": 26802,
+      "sha256": "6c005efbe6af8ce689e3cda8183aa924e43ec29bda274ad1fb51f79a9a69f01c"
+    },
+    "txt/chapters/chapter_01.txt": {
+      "bytes": 103578,
+      "sha256": "816a455cf99ea02b794d6aa024dadb771881d1a4df8f2de82abdcc9420f1982f"
+    },
+    "txt/chapters/chapter_02.txt": {
+      "bytes": 61580,
+      "sha256": "0216e138b4f4db5d9e32f18c612bfb0c9dbbfbb965f1315ff7e55ffd77db4b94"
+    },
+    "txt/chapters/chapter_03.txt": {
+      "bytes": 32609,
+      "sha256": "ec0f801542d8d460ce7bcf402ba6b9d01db31b78e7b18870c2d0331769dfda28"
+    },
+    "txt/chapters/chapter_04.txt": {
+      "bytes": 17315,
+      "sha256": "217da73303fd238d0e91072ce17065d46b1edc886daed9f026e4ae297d68c656"
+    },
+    "txt/chapters/chapter_05.txt": {
+      "bytes": 23094,
+      "sha256": "d9c2375f70b7ccdde11b3ded06f1c69c4435beb3620e63b068e3ef8c52d90b71"
+    },
+    "txt/chapters/chapter_06.txt": {
+      "bytes": 16379,
+      "sha256": "2b26cebbfe2335c97f709a43e22cbf1ff3fb1fc23b11791e3119b36b56b211bf"
+    },
+    "txt/chapters/chapter_07.txt": {
+      "bytes": 7597,
+      "sha256": "95ca35fe71ecf211709c183655dcfc3912f12f2ffb15b2c439f14887aa55ff00"
+    },
+    "txt/chapters/chapter_08.txt": {
+      "bytes": 12305,
+      "sha256": "a1ccd69c7c0e390a6e0b1e903132d9ae8dfcab53edad1beb0baa7df0fa33d4ea"
+    },
+    "txt/chapters/chapter_09.txt": {
+      "bytes": 3040,
+      "sha256": "7182172f30e4dd12d2a48127cef4f1c1eee0431640b770f8a8e2ba3d55b59689"
+    },
+    "txt/chapters/chapter_10.txt": {
+      "bytes": 5698,
+      "sha256": "8923306181718435e937c36f79110f655415960d5f732c356a4423afc15222b3"
+    },
+    "txt/chapters/chapter_11.txt": {
+      "bytes": 9272,
+      "sha256": "9ff850d8844a51bf9d478defcb9f06856c4ce79367d87fa8ab8ff84cc70f3d3c"
+    },
+    "txt/chapters/chapter_12.txt": {
+      "bytes": 17157,
+      "sha256": "b2c3a1de55a0a7abb6b47c0961c2358c6216cb4ea2ea0cce52e403e5d0804d9d"
+    },
+    "txt/chapters/chapter_13.txt": {
+      "bytes": 64568,
+      "sha256": "dc08d6adb750239f8b7f194301b941d87df39ebd5b083958ecddd335c13256bc"
+    },
+    "txt/chapters/chapter_14.txt": {
+      "bytes": 23988,
+      "sha256": "9fd35c651e1a92b77f450080b8424b5db852377bba4aa088f1008350dc4b3dfa"
+    },
+    "txt/chapters/chapter_15.txt": {
+      "bytes": 27694,
+      "sha256": "c55b7226941ad0250cfd335e68feebeb758a491c567120074025cff8d509e371"
+    },
+    "txt/chapters/chapter_16.txt": {
+      "bytes": 46580,
+      "sha256": "a5d9cc0b7a43157dce229ade153ed18db765b50879b4c7135789c0ea5aabfd52"
+    },
+    "txt/chapters/chapter_17.txt": {
+      "bytes": 51380,
+      "sha256": "25509d5cc8eb0071cccfca35e6fc7a43daa9a39e00c850950595567119b12f01"
+    },
+    "txt/chapters/chapter_18.txt": {
+      "bytes": 65840,
+      "sha256": "9867ecf074575bc74b0f3ad748bbb2fcbb6656a4e20a0734dde04658f593f0b8"
+    },
+    "txt/chapters/chapter_19.txt": {
+      "bytes": 39944,
+      "sha256": "1ce20ede7aa644f04b6bac2f71b77300c4d29c7fe36054d379e4fe90a8310781"
+    },
+    "txt/chapters/chapter_20.txt": {
+      "bytes": 64789,
+      "sha256": "8d0e32e9ecef707cdaa1d5b9ff4e21864c6ddbbe729d482aa46be46e418003fa"
+    },
+    "txt/chapters/chapter_21.txt": {
+      "bytes": 32277,
+      "sha256": "8a7d402979f374d5519b86ba2192688d825136b65af681b9ec7a9c7fa543d8c5"
+    },
+    "txt/chapters/chapter_22.txt": {
+      "bytes": 34646,
+      "sha256": "06405902e7d1b585248b335387838673daf2628d37de3ef8786f378bd17f2bbd"
+    },
+    "txt/chapters/chapter_23.txt": {
+      "bytes": 38762,
+      "sha256": "8a481edd8cd107eb9ed54d244b9a14ffbbfc385c51fc15c2cf7756e99b152b79"
+    },
+    "txt/chapters/chapter_24.txt": {
+      "bytes": 41083,
+      "sha256": "94bd6598f9933fc418cd0a0e3482df149d8a9794ac6bf8e49e35dcee2b396fea"
+    },
+    "txt/chapters/chapter_25.txt": {
+      "bytes": 34281,
+      "sha256": "eee7b731e3c0dfeb98cc8a653b463f55a6857a373eddac26646bf81ad4d1c5f1"
+    },
+    "txt/chapters/chapter_26.txt": {
+      "bytes": 34464,
+      "sha256": "4757b7f4f5c0d96db6a2915c451f11ddbd4e29f42bb891437141aee7832344f4"
+    },
+    "txt/chapters/chapter_27.txt": {
+      "bytes": 41868,
+      "sha256": "95031501201ecaf9c626660fa8fc4bd9f1baef603bc0de50615b236906e2c59f"
+    },
+    "txt/chapters/chapter_28.txt": {
+      "bytes": 10240,
+      "sha256": "b446cec9d9a259817b305a2976cbad7bac3d3ddfd62d94359c471091bcf298f9"
+    },
+    "txt/chapters/chapter_29.txt": {
+      "bytes": 10793,
+      "sha256": "bdb775f7d52ad39fec6fe8100497564cef19906489034e5a0adff012702bfd50"
+    },
+    "txt/chapters/chapter_30.txt": {
+      "bytes": 43763,
+      "sha256": "a8390dfc3d1f22c9c7e16e5e65037d80f404623c4c20ad8bcd01f22334660af7"
+    },
+    "txt/chapters/chapter_31.txt": {
+      "bytes": 43095,
+      "sha256": "0203a4a7fbf07a4a5938bcdbf97847a539ffd5d8a7cd771c7b14a148d5470e2a"
+    },
+    "txt/chapters/chapter_32.txt": {
+      "bytes": 45478,
+      "sha256": "1166d70e1e02bfcbaafc12cf7e267617a4db807a06745374af69a075daef1bf4"
+    },
+    "txt/chapters/chapter_33.txt": {
+      "bytes": 114643,
+      "sha256": "9afd7383c28b55a91cf9b17fe8d0381541a1ad8911dffe6b4cd1f8ea4e2d0961"
+    },
+    "txt/chapters/chapter_34.txt": {
+      "bytes": 106885,
+      "sha256": "b1b0b523a9a2596607058f90c078adb7e47f8a0ca5362f0c57c2a9e7be13ffde"
+    },
+    "txt/chapters/chapter_35.txt": {
+      "bytes": 102297,
+      "sha256": "37d51baf7270709520ea2006ea74e788c730dd1717e74d6a9e2387a5ebbb2c92"
+    },
+    "txt/chapters/chapter_36.txt": {
+      "bytes": 202228,
+      "sha256": "395b504e3572f676aadc51be26c9d20d14b5242d7c7c1ca74289934dc971c830"
+    },
+    "txt/chapters/chapter_37.txt": {
+      "bytes": 170657,
+      "sha256": "0fbbaaa4567910e8182d9d3b5506cdbefc8be5b844b0c9242ad826e3ed4c3b29"
+    },
+    "txt/chapters/chapter_38.txt": {
+      "bytes": 122797,
+      "sha256": "6c69c5e02cd75f489e333fc111986782e378f22294e655b0e9609efb7572eba4"
+    },
+    "txt/chapters/chapter_39.txt": {
+      "bytes": 128174,
+      "sha256": "bf67e075c4873b66e4377f469836f312a9bef8e5dc8338290e2b7b626239672b"
+    },
+    "txt/chapters/chapter_40.txt": {
+      "bytes": 98123,
+      "sha256": "57458c5b2db912ab308ba5a8cdc374126b556f0063962087b3f1193b0e81d91b"
+    },
+    "txt/chapters/chapter_41.txt": {
+      "bytes": 182738,
+      "sha256": "1c7657a7eea787f4f73070e552a9d53a9a494b5d13ccde2cdff1af29a813103b"
+    },
+    "txt/chapters/chapter_42.txt": {
+      "bytes": 186939,
+      "sha256": "e558000c0b6881cf6e14b693ffd97b1c537fe00f5c0b38cfd07d2b89089cb07d"
+    },
+    "txt/chapters/chapter_43.txt": {
+      "bytes": 62067,
+      "sha256": "459c69814547bb7c8009b7fa7674ac1f405bfcb52b1b67724be33cd93003c95e"
+    },
+    "txt/chapters/chapter_44.txt": {
+      "bytes": 62423,
+      "sha256": "6b5a208591628063a58ae67c3226106e87cadef7ee225c16720efc49c8e6b12c"
+    },
+    "txt/chapters/chapter_45.txt": {
+      "bytes": 105654,
+      "sha256": "8b0f73ea74b5a5ff8c86b8aeb84e697cc274845bd12e1d4241924bfb0a19ae81"
+    },
+    "txt/chapters/chapter_46.txt": {
+      "bytes": 173761,
+      "sha256": "ad4fd6f098b95185b06d5d366ce9664c0c5a6018ade326d397b9b325d858819d"
+    },
+    "txt/chapters/chapter_47.txt": {
+      "bytes": 32030,
+      "sha256": "5b0bb6c8322cf866b86aa60754859b90909b2412c0bc9a1983e320420b9b2b51"
+    },
+    "txt/chapters/chapter_48.txt": {
+      "bytes": 20688,
+      "sha256": "ff2a4197555d171aca0b111b33def19755474c9485d7403e46a2643ad49c5190"
+    },
+    "txt/chapters/chapter_49.txt": {
+      "bytes": 54686,
+      "sha256": "b18df7be2f38ef30e6ac271cfe58a38bb4b6b1dab8fdb5bae48f4330c996aebe"
+    },
+    "txt/chapters/chapter_50.txt": {
+      "bytes": 55863,
+      "sha256": "f2173ebf467ef4f455e62a93673d89a09710cd3fb13bb7da97258dcaffba2ed5"
+    },
+    "txt/seerah_full.txt": {
+      "bytes": 3094174,
+      "sha256": "430348190b55be47d940ab2866021739b0ea9ed6e01665d28ff939eab7b1da1b"
+    }
+  }
+}
