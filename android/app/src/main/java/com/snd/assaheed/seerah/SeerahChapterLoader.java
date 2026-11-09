@@ -5,7 +5,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 /**
- * Loads one chapter. Offline full-book copy wins; otherwise the small per-chapter
+ * Loads one chapter. Saved library copy wins; otherwise the small per-chapter
  * file is fetched, with the full book as a second online fallback.
  */
 public final class SeerahChapterLoader {
@@ -29,12 +29,12 @@ public final class SeerahChapterLoader {
             @Override
             public void run() {
                 try {
-                    OfflineSeerahManager offline = new OfflineSeerahManager(context);
+                    SeerahLibraryManager library = new SeerahLibraryManager(context);
                     SeerahChapter loaded;
-                    if (offline.isAvailableOffline()) {
+                    if (library.hasSavedCopy()) {
                         try {
-                            loaded = offline.readChapter(chapterId);
-                        } catch (Exception offlineError) {
+                            loaded = library.readChapter(chapterId);
+                        } catch (Exception savedCopyError) {
                             loaded = loadOnline(chapterId);
                         }
                     } else {

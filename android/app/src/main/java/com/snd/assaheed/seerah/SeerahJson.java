@@ -99,10 +99,11 @@ public final class SeerahJson {
         String slug = item.optString("slug", String.format(Locale.US, "chapter-%02d", Integer.valueOf(id)));
         String period = item.optString("period", "");
         String summary = item.optString("summary", "");
+        SeerahHighlights highlights = parseHighlights(item);
         int charCount = item.optInt("char_count", 0);
         String file = item.optString("file",
                 String.format(Locale.US, "data/chapters/chapter_%02d.json", Integer.valueOf(id)));
-        return new SeerahChapterInfo(id, title, slug, period, summary, charCount, file);
+        return new SeerahChapterInfo(id, title, slug, period, summary, highlights, charCount, file);
     }
 
     private static SeerahChapter parseChapterObject(JSONObject chapter) {
@@ -111,9 +112,22 @@ public final class SeerahJson {
         String slug = chapter.optString("slug", String.format(Locale.US, "chapter-%02d", Integer.valueOf(id)));
         String period = chapter.optString("period", "");
         String summary = chapter.optString("summary", "");
+        SeerahHighlights highlights = parseHighlights(chapter);
         int charCount = chapter.optInt("char_count", 0);
         List<SeerahBlock> blocks = parseContent(chapter.optJSONArray("content"));
-        return new SeerahChapter(id, title, slug, period, summary, charCount, blocks);
+        return new SeerahChapter(id, title, slug, period, summary, highlights, charCount, blocks);
+    }
+
+    private static SeerahHighlights parseHighlights(JSONObject item) {
+        JSONObject highlights = item.optJSONObject("highlights");
+        if (highlights == null) {
+            return SeerahHighlights.EMPTY;
+        }
+        return new SeerahHighlights(
+                highlights.optString("subtitle", ""),
+                highlights.optString("lesson", ""),
+                highlights.optString("fun", ""),
+                highlights.optString("practice", ""));
     }
 
     private static List<SeerahBlock> parseContent(JSONArray content) {

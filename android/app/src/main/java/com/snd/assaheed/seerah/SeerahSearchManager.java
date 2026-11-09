@@ -76,12 +76,12 @@ public final class SeerahSearchManager {
         if (cachedRaw != null && now - cachedAt < CACHE_MILLIS) {
             return cachedRaw;
         }
-        OfflineSeerahManager offline = new OfflineSeerahManager(context);
+        SeerahLibraryManager library = new SeerahLibraryManager(context);
         String raw;
-        if (offline.isAvailableOffline()) {
+        if (library.hasSavedCopy()) {
             try {
-                raw = offline.readFull();
-            } catch (Exception offlineError) {
+                raw = library.readSavedBook();
+            } catch (Exception savedCopyError) {
                 raw = SeerahHttp.getWithFallback(SeerahUrls.FULL, SeerahUrls.FULL_JSDELIVR);
             }
         } else {

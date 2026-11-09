@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +18,7 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-/** Table of contents, online loading, optional download and offline status. */
+/** Chapter library: online by default, with an optional saved copy. */
 public final class SeerahIndexActivity extends Activity {
     private RecyclerView list;
     private SeerahChapterAdapter adapter;
@@ -24,14 +26,15 @@ public final class SeerahIndexActivity extends Activity {
     private View errorBox;
     private TextView error;
     private Button retry;
-    private TextView offlineStatus;
-    private TextView offlineSize;
-    private Button download;
-    private Button delete;
+    private TextView libraryChip;
+    private View promo;
+    private TextView promoText;
+    private TextView promoHint;
+    private Button save;
     private ProgressBar downloadProgress;
     private TextView downloadPercent;
 
-    private OfflineSeerahManager offline;
+    private SeerahLibraryManager library;
     private final Handler handler = new Handler(Looper.getMainLooper());
     private boolean polling;
     private boolean finalizing;
@@ -43,24 +46,23 @@ public final class SeerahIndexActivity extends Activity {
             if (isFinishing()) {
                 return;
             }
-            long id = offline.getDownloadId();
+            long id = library.getDownloadId();
             if (id < 0L) {
                 stopPolling();
+                showPromoReady();
                 return;
             }
-            OfflineSeerahManager.DownloadProgress progress = offline.queryProgress(id);
+            SeerahLibraryManager.DownloadProgress progress = library.queryProgress(id);
             if (progress.isSuccessful()) {
-                downloadPercent.setText("যাচাই করা হচ্ছে…");
+                downloadPercent.setText(R.string.seerah_verifying);
                 finishDownload(id);
                 return;
             }
             if (progress.isFailed() || progress.isPaused()) {
                 stopPolling();
-                download.setEnabled(true);
-                downloadProgress.setVisibility(View.GONE);
-                downloadPercent.setVisibility(View.GONE);
+                showPromoReady();
                 Toast.makeText(SeerahIndexActivity.this,
-                        "ডাউনলোড সম্পূর্ণ হয়নি। আবার চেষ্টা করুন।", Toast.LENGTH_LONG).show();
+                        R.string.seerah_download_failed, Toast.LENGTH_LONG).show();
                 return;
             }
             downloadProgress.setVisibility(View.VISIBLE);
@@ -76,17 +78,18 @@ public final class SeerahIndexActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_seerah_index);
-        offline = new OfflineSeerahManager(this);
+        library = new SeerahLibraryManager(this);
 
         list = (RecyclerView) findViewById(R.id.seerah_index_list);
         loading = (ProgressBar) findViewById(R.id.seerah_index_loading);
         errorBox = findViewById(R.id.seerah_index_error_box);
         error = (TextView) findViewById(R.id.seerah_index_error);
         retry = (Button) findViewById(R.id.seerah_index_retry);
-        offlineStatus = (TextView) findViewById(R.id.seerah_offline_status);
-        offlineSize = (TextView) findViewById(R.id.seerah_offline_size);
-        download = (Button) findViewById(R.id.seerah_download);
-        delete = (Button) findViewById(R.id.seerah_delete);
+        libraryChip = (TextView) findViewById(R.id.seerah_library_chip);
+        promo = findViewById(R.id.seerah_promo);
+        promoText = (TextView) findViewById(R.id.seerah_promo_text);
+        promoHint = (TextView) findViewById(R.id.seerah_promo_hint);
+        save = (Button) findViewById(R.id.seerah_save);
         downloadProgress = (ProgressBar) findViewById(R.id.seerah_download_progress);
         downloadPercent = (TextView) findViewById(R.id.seerah_download_percent);
 
@@ -105,40 +108,43 @@ public final class SeerahIndexActivity extends Activity {
                 startActivity(new Intent(SeerahIndexActivity.this, SeerahSearchActivity.class));
             }
         });
+        findViewById(R.id.seerah_index_menu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMenu(view);
+            }
+        });
         retry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loadIndex();
             }
         });
-        download.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startDownload();
             }
         });
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                confirmDelete();
-            }
-        });
 
         loadIndex();
-        refreshOfflineUi();
+        refreshLibraryUi();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        refreshOfflineUi();
-        long id = offline.getDownloadId();
+        refreshLibraryUi();
+        long id = library.getDownloadId();
         if (id >= 0L) {
-            OfflineSeerahManager.DownloadProgress progress = offline.queryProgress(id);
+            SeerahLibraryManager.DownloadProgress progress = library.queryProgress(id);
             if (progress.isSuccessful()) {
                 finishDownload(id);
             } else if (progress.isRunning() || progress.isPending()) {
                 startPolling();
+            } else if (progress.isFailed()) {
+                library.clearDownloadId();
+                refreshLibraryUi();
             }
         }
     }
@@ -185,30 +191,48 @@ public final class SeerahIndexActivity extends Activity {
         startActivity(intent);
     }
 
-    private void refreshOfflineUi() {
-        if (offline.isAvailableOffline()) {
-            offlineStatus.setText("অফলাইন কপি প্রস্তুত");
-            offlineSize.setVisibility(View.VISIBLE);
-            offlineSize.setText("সংরক্ষিত আকার: " + SeerahMessages.bytes(offline.getOfflineSize()));
-            download.setText("আবার ডাউনলোড");
-            delete.setVisibility(View.VISIBLE);
+    /** The promo disappears completely once a copy is saved. */
+    private void refreshLibraryUi() {
+        if (library.hasSavedCopy()) {
+            libraryChip.setVisibility(View.VISIBLE);
+            libraryChip.setText(getString(R.string.seerah_saved_chip_size,
+                    getString(R.string.seerah_saved_chip),
+                    SeerahMessages.bytes(library.getSavedSize())));
+            promo.setVisibility(View.GONE);
+            save.setEnabled(true);
         } else {
-            offlineStatus.setText("অনলাইন মোড");
-            offlineSize.setVisibility(View.GONE);
-            download.setText("অফলাইনে ডাউনলোড");
-            delete.setVisibility(View.GONE);
+            libraryChip.setVisibility(View.GONE);
+            if (!polling && !finalizing) {
+                showPromoReady();
+            }
         }
-        download.setEnabled(true);
+    }
+
+    private void showPromoReady() {
+        if (library.hasSavedCopy()) {
+            promo.setVisibility(View.GONE);
+            return;
+        }
+        promo.setVisibility(View.VISIBLE);
+        promoText.setText(R.string.seerah_promo_text);
+        promoHint.setVisibility(View.VISIBLE);
+        save.setEnabled(true);
+        save.setText(R.string.seerah_save);
+        downloadProgress.setVisibility(View.GONE);
+        downloadPercent.setVisibility(View.GONE);
     }
 
     private void startDownload() {
-        if (polling || offline.isDownloadRunning()) {
+        if (library.isDownloadRunning()) {
             startPolling();
             return;
         }
         try {
-            offline.enqueueDownload();
-            download.setEnabled(false);
+            library.enqueueDownload();
+            promo.setVisibility(View.VISIBLE);
+            promoText.setText(R.string.seerah_downloading);
+            promoHint.setVisibility(View.GONE);
+            save.setEnabled(false);
             downloadProgress.setProgress(0);
             downloadProgress.setVisibility(View.VISIBLE);
             downloadPercent.setText(SeerahMessages.percent(0));
@@ -224,7 +248,10 @@ public final class SeerahIndexActivity extends Activity {
             return;
         }
         polling = true;
-        download.setEnabled(false);
+        promo.setVisibility(View.VISIBLE);
+        promoText.setText(R.string.seerah_downloading);
+        promoHint.setVisibility(View.GONE);
+        save.setEnabled(false);
         handler.post(pollRunnable);
     }
 
@@ -242,37 +269,69 @@ public final class SeerahIndexActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final boolean ok = offline.finalizeDownload(id);
+                final boolean ok = library.finalizeDownload(id);
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         finalizing = false;
-                        downloadProgress.setVisibility(View.GONE);
-                        downloadPercent.setVisibility(View.GONE);
-                        download.setEnabled(true);
-                        refreshOfflineUi();
-                        Toast.makeText(SeerahIndexActivity.this,
-                                ok ? "সীরাত অফলাইনে সংরক্ষিত হয়েছে।"
-                                        : "সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।",
-                                Toast.LENGTH_LONG).show();
+                        if (ok) {
+                            refreshLibraryUi();
+                            Toast.makeText(SeerahIndexActivity.this,
+                                    R.string.seerah_saved_toast, Toast.LENGTH_LONG).show();
+                        } else {
+                            showPromoReady();
+                            Toast.makeText(SeerahIndexActivity.this,
+                                    R.string.seerah_saved_failed, Toast.LENGTH_LONG).show();
+                        }
                     }
                 });
             }
         }).start();
     }
 
+    private void showMenu(View anchor) {
+        PopupMenu popup = new PopupMenu(this, anchor);
+        popup.getMenu().add(0, 1, 0, R.string.seerah_about);
+        if (library.hasSavedCopy()) {
+            popup.getMenu().add(0, 2, 1, R.string.seerah_delete_saved);
+        }
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == 1) {
+                    showAbout();
+                    return true;
+                }
+                if (item.getItemId() == 2) {
+                    confirmDelete();
+                    return true;
+                }
+                return false;
+            }
+        });
+        popup.show();
+    }
+
+    private void showAbout() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.seerah_about)
+                .setMessage(R.string.seerah_about_message)
+                .setPositiveButton(R.string.seerah_cancel, null)
+                .show();
+    }
+
     private void confirmDelete() {
         new AlertDialog.Builder(this)
-                .setTitle("অফলাইন কপি মুছবেন?")
-                .setMessage("সংরক্ষিত সীরাত ফাইলটি ফোন থেকে মুছে যাবে।")
-                .setPositiveButton("মুছুন", new DialogInterface.OnClickListener() {
+                .setTitle(R.string.seerah_delete_title)
+                .setMessage(R.string.seerah_delete_message)
+                .setPositiveButton(R.string.seerah_delete, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        offline.deleteOffline();
-                        refreshOfflineUi();
+                        library.deleteSavedCopy();
+                        refreshLibraryUi();
                     }
                 })
-                .setNegativeButton("বাতিল", null)
+                .setNegativeButton(R.string.seerah_cancel, null)
                 .show();
     }
 }

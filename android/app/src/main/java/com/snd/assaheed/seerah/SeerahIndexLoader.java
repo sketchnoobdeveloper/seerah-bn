@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 
-/** Loads the table of contents from the offline copy or the GitHub raw CDN. */
+/** Loads the table of contents from the saved copy or the GitHub raw CDN. */
 public final class SeerahIndexLoader {
     public interface Callback {
         void onSuccess(SeerahIndex index);
@@ -26,12 +26,12 @@ public final class SeerahIndexLoader {
             @Override
             public void run() {
                 try {
-                    OfflineSeerahManager offline = new OfflineSeerahManager(context);
+                    SeerahLibraryManager library = new SeerahLibraryManager(context);
                     SeerahIndex loaded;
-                    if (offline.isAvailableOffline()) {
+                    if (library.hasSavedCopy()) {
                         try {
-                            loaded = SeerahJson.parseIndexFromFull(offline.readFull());
-                        } catch (Exception offlineError) {
+                            loaded = SeerahJson.parseIndexFromFull(library.readSavedBook());
+                        } catch (Exception savedCopyError) {
                             String raw = SeerahHttp.getWithFallback(
                                     SeerahUrls.INDEX, SeerahUrls.INDEX_JSDELIVR);
                             loaded = SeerahJson.parseIndex(raw);

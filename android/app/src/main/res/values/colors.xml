@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="seerah_accent">#1F6F5C</color>
+    <color name="seerah_gold">#A8791A</color>
+    <color name="seerah_practice">#2C6E8F</color>
     <color name="seerah_bg">#FFF9EF</color>
     <color name="seerah_card">#FFFFFF</color>
+    <color name="seerah_card_end">#FFFBF3</color>
     <color name="seerah_text">#1D2B26</color>
     <color name="seerah_muted">#68786F</color>
     <color name="seerah_stroke">#E3D8C3</color>

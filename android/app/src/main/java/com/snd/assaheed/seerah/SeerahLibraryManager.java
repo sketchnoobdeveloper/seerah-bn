@@ -15,23 +15,24 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * Optional offline copy of the complete book.
+ * Optional "library" copy of the complete book.
  *
- * DownloadManager writes to the app-specific external directory (no storage
- * permission needed on API 19+), then the verified file is copied atomically to
- * getFilesDir()/seerah/seerah.json. The reader checks that internal file first.
+ * Online reading is the default. When the reader taps সংরক্ষণ, DownloadManager
+ * writes to the app-specific external directory (no storage permission needed
+ * on API 19+), then the verified file is copied atomically to
+ * getFilesDir()/seerah/seerah.json. The reader checks that saved copy first.
  */
-public final class OfflineSeerahManager {
+public final class SeerahLibraryManager {
     private static final String DIRECTORY = "seerah";
     private static final String FILE_NAME = "seerah.json";
     private static final String EXTERNAL_NAME = "seerah-download.json";
-    private static final String PREFS = "seerah_offline";
+    private static final String PREFS = "seerah_library";
     private static final String KEY_DOWNLOAD_ID = "download_id";
     private static final long MIN_VALID_BYTES = 1000L;
 
     private final Context context;
 
-    public OfflineSeerahManager(Context context) {
+    public SeerahLibraryManager(Context context) {
         this.context = context.getApplicationContext();
     }
 
@@ -44,25 +45,25 @@ public final class OfflineSeerahManager {
         return directory == null ? null : new File(directory, EXTERNAL_NAME);
     }
 
-    public boolean isAvailableOffline() {
+    public boolean hasSavedCopy() {
         File file = getInternalFile();
         return file.isFile() && file.length() > MIN_VALID_BYTES;
     }
 
-    public long getOfflineSize() {
+    public long getSavedSize() {
         File file = getInternalFile();
         return file.isFile() ? file.length() : 0L;
     }
 
-    public String readFull() throws IOException {
+    public String readSavedBook() throws IOException {
         return readFile(getInternalFile());
     }
 
     public SeerahChapter readChapter(int chapterId) throws Exception {
-        return SeerahJson.parseChapterFromFull(readFull(), chapterId);
+        return SeerahJson.parseChapterFromFull(readSavedBook(), chapterId);
     }
 
-    public void deleteOffline() {
+    public void deleteSavedCopy() {
         File internal = getInternalFile();
         if (internal.exists()) {
             internal.delete();
@@ -89,7 +90,7 @@ public final class OfflineSeerahManager {
         }
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(SeerahUrls.FULL));
         request.setTitle("সীরাতুন নবী");
-        request.setDescription("অফলাইনে পড়ার জন্য সংরক্ষণ");
+        request.setDescription("লাইব্রেরিতে পড়ার জন্য সংরক্ষণ");
         request.setMimeType("application/json");
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {

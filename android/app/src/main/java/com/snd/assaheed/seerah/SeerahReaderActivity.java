@@ -144,7 +144,7 @@ public final class SeerahReaderActivity extends Activity {
                 errorBox.setVisibility(View.GONE);
                 list.setVisibility(View.VISIBLE);
                 title.setText(chapter.title);
-                adapter.setBlocks(chapter.content);
+                adapter.setContent(chapter.content, chapter.highlights);
                 list.scrollToPosition(0);
                 previous.setEnabled(chapter.id > 1);
                 next.setEnabled(chapter.id < chapterCount);

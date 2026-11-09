@@ -10,9 +10,8 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="18dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="18dp"
-        android:paddingBottom="4dp">
+        android:paddingTop="14dp"
+        android:paddingEnd="8dp">
 
         <TextView
             android:id="@+id/seerah_index_title"
@@ -21,31 +20,63 @@
             android:layout_weight="1"
             android:text="@string/seerah_title"
             android:textColor="@color/seerah_text"
-            android:textSize="23sp"
+            android:textSize="21sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/seerah_index_search"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/seerah_search"
-            android:padding="10dp"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:text="@string/seerah_search"
             android:textColor="@color/seerah_accent"
-            android:textSize="15sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/seerah_index_menu"
+            android:layout_width="40dp"
+            android:layout_height="44dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/seerah_menu"
+            android:gravity="center"
+            android:text="⋮"
+            android:textColor="@color/seerah_text"
+            android:textSize="22sp" />
     </LinearLayout>
 
     <TextView
+        android:id="@+id/seerah_index_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="18dp"
         android:paddingEnd="18dp"
-        android:paddingBottom="10dp"
         android:text="@string/seerah_subtitle"
         android:textColor="@color/seerah_muted"
-        android:textSize="13sp" />
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/seerah_library_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="18dp"
+        android:background="@drawable/seerah_chip_background"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingStart="10dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="4dp"
+        android:textColor="@color/seerah_accent"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -58,7 +89,7 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingStart="16dp"
-            android:paddingTop="6dp"
+            android:paddingTop="10dp"
             android:paddingEnd="16dp"
             android:paddingBottom="12dp"
             android:scrollbars="vertical" />
@@ -98,70 +129,71 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/seerah_promo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="14dp"
         android:background="@drawable/seerah_card_background"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <TextView
-            android:id="@+id/seerah_offline_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/seerah_text"
-            android:textSize="15sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/seerah_offline_size"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/seerah_muted"
-            android:textSize="13sp"
-            android:visibility="gone" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="14dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="10dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/seerah_download"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/seerah_promo_text"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/seerah_offline_download" />
+                android:text="@string/seerah_promo_text"
+                android:textColor="@color/seerah_text"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/seerah_delete"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/seerah_promo_hint"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="@string/seerah_offline_delete"
+                android:layout_marginTop="1dp"
+                android:text="@string/seerah_promo_hint"
+                android:textColor="@color/seerah_muted"
+                android:textSize="11sp" />
+
+            <ProgressBar
+                android:id="@+id/seerah_download_progress"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:max="100"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/seerah_download_percent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/seerah_muted"
+                android:textSize="11sp"
                 android:visibility="gone" />
         </LinearLayout>
 
-        <ProgressBar
-            android:id="@+id/seerah_download_progress"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/seerah_save"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:max="100"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/seerah_download_percent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:textColor="@color/seerah_muted"
-            android:textSize="12sp"
-            android:visibility="gone" />
+            android:layout_marginStart="10dp"
+            android:minWidth="0dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:text="@string/seerah_save"
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>

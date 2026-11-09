@@ -33,7 +33,8 @@ seerah-bn/
 │       ├── chapter_01.txt
 │       └── ... chapter_50.txt
 ├── scripts/
-│   └── pdf_to_json.py
+│   ├── pdf_to_json.py
+│   └── highlights_bn.py       # short reading cues for every chapter
 └── android/
     ├── README.md
     └── app/src/main/
@@ -64,6 +65,12 @@ seerah-bn/
       "slug": "chapter-01",
       "period": "প্রাক-ইসলামি আরব",
       "summary": "আরব উপদ্বীপের অবস্থান, ভৌগোলিক বৈশিষ্ট্য ...",
+      "highlights": {
+        "subtitle": "এক মরুভূমি, তিন জাতি, এক মহান আগমন",
+        "lesson": "ভৌগোলিক পরিবেশ মানুষ ও জাতির চরিত্র গড়ে তোলে।",
+        "fun": "আরব জাতিকে বারেবা, আবেরা ও মোস্তারেবা—তিন ভাগে ভাগ করা হয়।",
+        "practice": "নিজের পরিবেশ ও ইতিহাস জানুন, দাওয়াতের প্রেক্ষাপট বুঝুন।"
+      },
       "char_count": 38767,
       "content": [
         { "type": "heading", "text": "আরবের ভৌগোলিক পরিচয় ও জাতিসমূহ" },
@@ -78,6 +85,19 @@ Each `data/chapters/chapter_XX.json` is one chapter object (the same object as
 inside `chapters`). `data/seerah_index.json` contains only `meta` and the
 chapter list, so an app can show the table of contents without downloading the
 full 3.2 MB book.
+
+### Reading cues
+
+Every chapter has a `highlights` object with four short editorial fields:
+
+- `subtitle` — a one-line hook for the chapter card
+- `lesson` — the main lesson (`শিক্ষা`)
+- `fun` — an interesting point (`মজার তথ্য`)
+- `practice` — a practical takeaway (`প্রয়োগ`)
+
+These are concise summaries written for the app, not a substitute for the full
+text or a scholarly commentary. They live in `scripts/highlights_bn.py` and are
+merged by `pdf_to_json.py`, so a rebuild keeps them.
 
 ## Raw GitHub CDN URLs
 
@@ -170,7 +190,8 @@ python3 scripts/pdf_to_json.py \
 The chapter boundary table is specific to this IslamHouse edition. The cached
 OCR text is included so the generated data can be reproduced exactly. A fresh
 Tesseract OCR may produce different wording and will use heading-based chapter
-detection instead of the verified offsets.
+detection instead of the verified offsets. Reading cues are kept in
+`scripts/highlights_bn.py` and are merged into every chapter automatically.
 
 ## Android module
 
@@ -179,10 +200,13 @@ constraints: no lambdas, no try-with-resources, anonymous inner classes,
 `Thread` + `Handler`, `HttpURLConnection` + `org.json`, `DownloadManager`, and
 `minSdk 21`. It includes:
 
-- chapter index with search and offline badge
-- lazy heading/paragraph reader with previous/next and font size
+- compact premium chapter cards: number, title, subtitle, `শিক্ষা`,
+  `মজার তথ্য` and `প্রয়োগ`
+- online reading by default; the slim save bar disappears after the book is
+  saved to the app library
+- saved-copy chip with size, delete in the overflow menu
+- reader with the same reading cues, previous/next, font size and progress
 - full-book keyword search
-- optional DownloadManager copy in internal storage
 - day/night layouts and Bangla typography
 
 See [`android/README.md`](android/README.md) for the class list, build command

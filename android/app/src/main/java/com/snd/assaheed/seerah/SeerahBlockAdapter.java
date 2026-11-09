@@ -12,19 +12,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Renders headings and paragraphs lazily; long chapters never inflate all views. */
-public final class SeerahBlockAdapter extends RecyclerView.Adapter<SeerahBlockAdapter.Holder> {
+/**
+ * Renders the chapter's reading cues followed by headings and paragraphs.
+ * Only visible rows are inflated, so a 50,000-character chapter stays smooth.
+ */
+public final class SeerahBlockAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final int TYPE_PARAGRAPH = 0;
     private static final int TYPE_HEADING = 1;
+    private static final int TYPE_HIGHLIGHTS = 2;
 
     private final List<SeerahBlock> blocks = new ArrayList<SeerahBlock>();
+    private SeerahHighlights highlights = SeerahHighlights.EMPTY;
     private float fontSize = 18f;
 
-    public void setBlocks(List<SeerahBlock> content) {
+    public void setContent(List<SeerahBlock> content, SeerahHighlights cues) {
         blocks.clear();
         if (content != null) {
             blocks.addAll(content);
         }
+        highlights = cues == null ? SeerahHighlights.EMPTY : cues;
         notifyDataSetChanged();
     }
 
@@ -38,20 +44,70 @@ public final class SeerahBlockAdapter extends RecyclerView.Adapter<SeerahBlockAd
     }
 
     @Override
+    public int getItemCount() {
+        return blocks.size() + (hasHeader() ? 1 : 0);
+    }
+
+    @Override
     public int getItemViewType(int position) {
-        return blocks.get(position).isHeading() ? TYPE_HEADING : TYPE_PARAGRAPH;
+        if (hasHeader() && position == 0) {
+            return TYPE_HIGHLIGHTS;
+        }
+        return blocks.get(position - offset()).isHeading() ? TYPE_HEADING : TYPE_PARAGRAPH;
     }
 
     @Override
-    public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_seerah_block, parent, false);
-        return new Holder(view);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        if (viewType == TYPE_HIGHLIGHTS) {
+            return new HighlightsHolder(inflater.inflate(R.layout.item_seerah_highlights, parent, false));
+        }
+        return new BlockHolder(inflater.inflate(R.layout.item_seerah_block, parent, false));
     }
 
     @Override
-    public void onBindViewHolder(Holder holder, int position) {
-        SeerahBlock block = blocks.get(position);
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof HighlightsHolder) {
+            bindHighlights((HighlightsHolder) holder);
+            return;
+        }
+        bindBlock((BlockHolder) holder, blocks.get(position - offset()));
+    }
+
+    private boolean hasHeader() {
+        return highlights.hasAny();
+    }
+
+    private int offset() {
+        return hasHeader() ? 1 : 0;
+    }
+
+    private void bindHighlights(HighlightsHolder holder) {
+        bindText(holder.subtitle, highlights.subtitle);
+        bindRow(holder.lessonRow, holder.lesson, highlights.lesson);
+        bindRow(holder.funRow, holder.fun, highlights.fun);
+        bindRow(holder.practiceRow, holder.practice, highlights.practice);
+    }
+
+    private static void bindText(TextView view, String value) {
+        if (value.length() == 0) {
+            view.setVisibility(View.GONE);
+        } else {
+            view.setVisibility(View.VISIBLE);
+            view.setText(value);
+        }
+    }
+
+    private static void bindRow(View row, TextView text, String value) {
+        if (value.length() == 0) {
+            row.setVisibility(View.GONE);
+        } else {
+            row.setVisibility(View.VISIBLE);
+            text.setText(value);
+        }
+    }
+
+    private void bindBlock(BlockHolder holder, SeerahBlock block) {
         holder.text.setText(block.text);
         holder.text.setTextIsSelectable(true);
         if (block.isHeading()) {
@@ -69,21 +125,37 @@ public final class SeerahBlockAdapter extends RecyclerView.Adapter<SeerahBlockAd
         }
     }
 
-    @Override
-    public int getItemCount() {
-        return blocks.size();
-    }
-
     private static int dp(TextView view, int value) {
         return (int) (value * view.getResources().getDisplayMetrics().density + 0.5f);
     }
 
-    static final class Holder extends RecyclerView.ViewHolder {
+    static final class BlockHolder extends RecyclerView.ViewHolder {
         final TextView text;
 
-        Holder(View itemView) {
+        BlockHolder(View itemView) {
             super(itemView);
             text = (TextView) itemView.findViewById(R.id.seerah_block_text);
+        }
+    }
+
+    static final class HighlightsHolder extends RecyclerView.ViewHolder {
+        final TextView subtitle;
+        final View lessonRow;
+        final TextView lesson;
+        final View funRow;
+        final TextView fun;
+        final View practiceRow;
+        final TextView practice;
+
+        HighlightsHolder(View itemView) {
+            super(itemView);
+            subtitle = (TextView) itemView.findViewById(R.id.seerah_highlights_subtitle);
+            lessonRow = itemView.findViewById(R.id.seerah_highlights_lesson_row);
+            lesson = (TextView) itemView.findViewById(R.id.seerah_highlights_lesson);
+            funRow = itemView.findViewById(R.id.seerah_highlights_fun_row);
+            fun = (TextView) itemView.findViewById(R.id.seerah_highlights_fun);
+            practiceRow = itemView.findViewById(R.id.seerah_highlights_practice_row);
+            practice = (TextView) itemView.findViewById(R.id.seerah_highlights_practice);
         }
     }
 }

@@ -40,6 +40,11 @@ import sys
 import tempfile
 from pathlib import Path
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+from highlights_bn import DEFAULT_HIGHLIGHTS, HIGHLIGHTS  # noqa: E402
+
 PDF_URL = "https://d1.islamhouse.com/data/bn/ih_books/single/bn_ar_raheequl_makhtoom.pdf"
 BOOK_TITLE = "আর-রাহীকুল মাখতুম"
 BOOK_TITLE_EN = "Ar-Raheeq Al-Makhtum"
@@ -405,12 +410,15 @@ def slug_for(index: int) -> str:
 def chapter_payload(index: int, title: str, period: str, summary: str, body: str) -> dict:
     blocks = content_blocks(title, body)
     char_count = sum(len(block["text"]) for block in blocks)
+    highlights = dict(DEFAULT_HIGHLIGHTS)
+    highlights.update(HIGHLIGHTS.get(index, {}))
     return {
         "id": index,
         "title": title,
         "slug": slug_for(index),
         "period": period,
         "summary": summary,
+        "highlights": highlights,
         "char_count": char_count,
         "content": blocks,
     }
@@ -427,6 +435,7 @@ def build_meta(generated: str) -> dict:
         "source": "islamhouse.com",
         "source_url": PDF_URL,
         "edition": "IslamHouse Bangla PDF, 508-page scan (OCR-derived text)",
+        "highlights_note": "সংক্ষিপ্ত সম্পাদকীয় পাঠ-ইঙ্গিত (শিক্ষা, মজার তথ্য, প্রয়োগ); মূল পাঠ বা scholarly commentary-র বিকল্প নয়।",
         "generated": generated,
         "notice": "Technical cleanup only. Redistribution permission is not independently confirmed; "
                   "provided for free Islamic/educational use with source credit. Not a scholarly review.",
@@ -598,6 +607,7 @@ def main() -> int:
                 "slug": chapter["slug"],
                 "period": chapter["period"],
                 "summary": chapter["summary"],
+                "highlights": chapter["highlights"],
                 "char_count": chapter["char_count"],
                 "file": f"data/chapters/chapter_{chapter['id']:02d}.json",
             }
